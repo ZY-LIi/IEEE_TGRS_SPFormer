@@ -7,7 +7,7 @@ ___________
 This is a slim implementation of the ["SPFormer: Self-Pooling Transformer for Few-Shot Hyperspectral Image Classification"](https://ieeexplore.ieee.org/document/10371361), and the official release please sees [here](https://github.com/ZhaohuiXue/SPFormer).
 
 ![alt text](./figure/SPFormer.jpg)
-**Figure 1: The overview of Self-Pooling Transformer, including three stages: HSI dimensionality reduction, SPF block encoding, classification.**
+**Figure 1: The overview of Self-Pooling Transformer, including three stages: HSI dimensionality reduction, SPF block encoding, Classification.**
 
 ![alt text](./figure/CSSM-MHSP.jpg)
 **Figure 2: Spectral token mixer module in SPFormer.**
