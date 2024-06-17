@@ -52,7 +52,10 @@ def generate_batch(X, batch_size=64, shuffle=True):
         yield np.expand_dims(patches, axis=-1)
 
 
-def train_ae(X, batch_size=64, epoches=120, lr=1e-2, out_channel=32, decay_step=1000):
+def train_ae(X, dataset_name, batch_size=64, epoches=120, lr=1e-2, out_channel=32, decay_step=1000):
+
+    if not os.path.exists(os.path.join('./save/autoencoder/', dataset_name)):
+        os.makedirs(os.path.join('./save/autoencoder/', dataset_name))
 
     row, col, band = X.shape
     model = AutoEncoder(in_channels=band, out_channels=out_channel)
@@ -64,6 +67,7 @@ def train_ae(X, batch_size=64, epoches=120, lr=1e-2, out_channel=32, decay_step=
     optimizer = torch.optim.Adam(model.parameters(), lr=lr, betas=(0.9, 0.999), eps=1e-8, weight_decay=0)
     lr_scheduler = torch.optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.99)
 
+    min_loss = 0
     t = time.time()
     for epoch in range(epoches):
         data_loader = generate_batch(X, batch_size=batch_size, shuffle=True)
@@ -80,12 +84,14 @@ def train_ae(X, batch_size=64, epoches=120, lr=1e-2, out_channel=32, decay_step=
             optimizer.step()
             if (step + 1) % decay_step == 0:
                 lr_scheduler.step()
-                print('epoch: %d, step_loss: %.5f, lr: %.5f'
-                      % (epoch, loss.item(), lr_scheduler.get_last_lr()[0]))
+                print('epoch: %d, epoch_loss_mean: %.5f, lr: %.5f'
+                      % (epoch, epoch_loss / (step + 1), lr_scheduler.get_last_lr()[0]))
         train_loss_list.append(epoch_loss / (step + 1))
-        if epoch >= epoches - 10:
-            torch.save(model.state_dict(), './save/autoencoder/epoch-' + str(epoch) +
-                       'train_loss-' + str(epoch_loss / (step + 1)) + '.pt')
+        if epoch == 0:
+            min_loss = epoch_loss / (step + 1)
+        elif min_loss > epoch_loss / (step + 1):
+            torch.save(model.state_dict(), './save/autoencoder/' + dataset_name + '/' +
+                       dataset_name + '_' + str(out_channel) + '.pt')
 
     print("Training Time: {}s".format(time.time() - t))
     plt.plot(train_loss_list)
@@ -99,51 +105,48 @@ def resolve_hp(hp: dict):
            hp.get('out_channel'), hp.get('decay_step')
 
 
-def delete_pt_file():
-    for file in os.listdir('./save/autoencoder'):
-        if file.endswith('.pt'):
-            os.remove(os.path.join('./save/autoencoder', file))
-
-
 def IP_experiment(hp: dict):
-    X = load_dataset(dataset_name='IP', key=1)
+    dataset_name = 'IP'
+    X = load_dataset(dataset_name=dataset_name, key=1)
     batch_size, lr, epoch, out_channel, decay_step = resolve_hp(hp)
-    train_ae(X, batch_size=batch_size, lr=lr, epoches=epoch, out_channel=out_channel, decay_step=decay_step)
+    train_ae(X, dataset_name=dataset_name, batch_size=batch_size, lr=lr, epoches=epoch, out_channel=out_channel, decay_step=decay_step)
 
 
 def PU_experiment(hp: dict):
-    X = load_dataset(dataset_name='PU', key=1)
+    dataset_name = 'PU'
+    X = load_dataset(dataset_name=dataset_name, key=1)
     batch_size, lr, epoch, out_channel, decay_step = resolve_hp(hp)
-    train_ae(X, batch_size=batch_size, lr=lr, epoches=epoch, out_channel=out_channel, decay_step=decay_step)
+    train_ae(X, dataset_name=dataset_name, batch_size=batch_size, lr=lr, epoches=epoch, out_channel=out_channel, decay_step=decay_step)
 
 
 def Salinas_experiment(hp: dict):
-    X = load_dataset(dataset_name='Salinas', key=1)
+    dataset_name = 'Salinas'
+    X = load_dataset(dataset_name=dataset_name, key=1)
     batch_size, lr, epoch, out_channel, decay_step = resolve_hp(hp)
-    train_ae(X, batch_size=batch_size, lr=lr, epoches=epoch, out_channel=out_channel, decay_step=decay_step)
+    train_ae(X, dataset_name=dataset_name, batch_size=batch_size, lr=lr, epoches=epoch, out_channel=out_channel, decay_step=decay_step)
 
 
 def HU_experiment(hp: dict):
-    X = load_dataset(dataset_name='Houston', key=1)
+    dataset_name = 'Houston'
+    X = load_dataset(dataset_name=dataset_name, key=1)
     batch_size, lr, epoch, out_channel, decay_step = resolve_hp(hp)
-    train_ae(X, batch_size=batch_size, lr=lr, epoches=epoch, out_channel=out_channel, decay_step=decay_step)
+    train_ae(X, dataset_name=dataset_name, batch_size=batch_size, lr=lr, epoches=epoch, out_channel=out_channel, decay_step=decay_step)
 
 
 if __name__ == '__main__':
-    delete_pt_file()
-    hyperparameter_pu = {
-        'batch_size': 64,
-        'lr': 1e-2,
-        'epoch': 50,
-        'out_channel': 32,
-        'decay_step': 800,
-    }
-    PU_experiment(hp=hyperparameter_pu)
+    # hyperparameter_pu = {
+    #     'batch_size': 64,
+    #     'lr': 1e-2,
+    #     'epoch': 50,
+    #     'out_channel': 32,
+    #     'decay_step': 800,
+    # }
+    # PU_experiment(hp=hyperparameter_pu)
 
     hyperparameter_ip = {
         'batch_size': 128,
         'lr': 1e-2,
-        'epoch': 20,
+        'epoch': 50,
         'out_channel': 40,
         'decay_step': 20,
     }
