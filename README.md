@@ -52,6 +52,7 @@ Instructions for usage
 2. Proceed to run main.py for model training and testing on the specified dataset. Ensure that you accurately input the autoencoder's file path into the designated dictionary variable before initiating the process.
 
 
+
     AutoEncoder.py ...... Train an autoencoder for hyperspectral image dimensionality reduction and save the .pt file.
     SelfPoolingTransformer.py ...... A script for the implementation of SPFormer.
     main.py ...... A main script for hyperspectral image classification.
