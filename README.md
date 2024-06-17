@@ -4,10 +4,10 @@
 
 ___________
 
-This is a slim implementation of the ["SPFormer: Self-Pooling Transformer for Few-Shot Hyperspectral Image Classification"](https://ieeexplore.ieee.org/document/10371361), and the official release please sees [here](https://github.com/ZhaohuiXue/SPFormer).
+This is a slim implementation of the ["SPFormer: Self-Pooling Transformer for Few-Shot Hyperspectral Image Classification"](https://ieeexplore.ieee.org/document/10371361), and the official release please sees ["here"](https://github.com/ZhaohuiXue/SPFormer).
 
 ![alt text](./figure/SPFormer.jpg)
-**Figure 1: The overview of Self-Pooling Transformer, including three stages: HSI dimensionality reduction, SPF block encoding, Classification.**
+**Figure 1: The overview of Self-Pooling Transformer, including three stages: HSI dimensionality reduction, SPF block encoding, classification.**
 
 ![alt text](./figure/CSSM-MHSP.jpg)
 **Figure 2: Spectral token mixer module in SPFormer.**
@@ -18,7 +18,7 @@ This is a slim implementation of the ["SPFormer: Self-Pooling Transformer for Fe
 Citation
 ---------------------
 
-**Reproductions of our model and experiments are welcome, and citations to our paper will be greatly appreciated!**
+**Reproductions of our model and experiments are very welcome, and citations to our paper will be greatly appreciated**
 
 Z. Li, Z. Xue, Q. Xu, L. Zhang, T. Zhu and M. Zhang, "SPFormer: Self-Pooling Transformer for Few-Shot Hyperspectral Image Classification," in IEEE Transactions on Geoscience and Remote Sensing, vol. 62, pp. 1-19, 2024, Art no. 5502019, doi: 10.1109/TGRS.2023.3345923.
 
@@ -48,6 +48,9 @@ Running environment and required packages:
 
 Instructions for usage
 ---------------------
+1. Begin by executing AutoEncoder.py to initiate the training of the autoencoder for the specific dataset. It is advised to set the training iterations to a minimum of 50. Automatically save the model with the lowest loss, and take note of the file path for the corresponding .pt file.
+2. Proceed to run main.py for model training and testing on the specified dataset. Ensure that you accurately input the autoencoder's file path into the designated dictionary variable before initiating the process.
+
 
     AutoEncoder.py ...... Train an autoencoder for hyperspectral image dimensionality reduction and save the .pt file.
     SelfPoolingTransformer.py ...... A script for the implementation of SPFormer.
@@ -55,6 +58,3 @@ Instructions for usage
     data.py ...... A data processing script for hyperspectral image.
     loop_train_test.py ...... Perform iterative training and testing loops, saving the model weights in the 'save\models' directory, and storing the confusion matrix of the test results in the 'save\results' directory.
     loss_function.py ...... A script for calculating training loss.
-
-1. Begin by executing AutoEncoder.py to initiate the training of the autoencoder for the specific dataset. It is advised to set the training iterations to a minimum of 50. Manually save the model with the lowest loss, and take note of the file path for the corresponding .pt file.
-2. Proceed to run main.py for model training and testing on the specified dataset. Ensure that you accurately input the autoencoder's file path into the designated dictionary variable before initiating the process.
