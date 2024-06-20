@@ -40,29 +40,29 @@ if __name__ == '__main__':
     # }
     # PU_experiment(hp=hyperparameter_pu)
 
-    hyperparameter_ip = {
-        'run_times': 1,
-        'num_PC': 40,
-        'train_num': 5,
-        'patch_size': 13,
-        'batch_size': 80,
-        'lr': 1e-3,
-        'epoch': 155,
-        'autoencoder_path': './save/autoencoder/IP/IP_40.pt',
-    }
-    IP_experiment(hp=hyperparameter_ip)
-
-    # hyperparameter_salinas = {
+    # hyperparameter_ip = {
     #     'run_times': 1,
     #     'num_PC': 40,
     #     'train_num': 5,
     #     'patch_size': 13,
     #     'batch_size': 80,
     #     'lr': 1e-3,
-    #     'epoch': 165,
-    #     'autoencoder_path': './save/autoencoder/Salinas/Salinas_40.pt',
+    #     'epoch': 155,
+    #     'autoencoder_path': './save/autoencoder/IP/IP_40.pt',
     # }
-    # Salinas_experiment(hp=hyperparameter_salinas)
+    # IP_experiment(hp=hyperparameter_ip)
+
+    hyperparameter_salinas = {
+        'run_times': 1,
+        'num_PC': 40,
+        'train_num': 5,
+        'patch_size': 13,
+        'batch_size': 80,
+        'lr': 1e-3,
+        'epoch': 165,
+        'autoencoder_path': './save/autoencoder/Salinas/Salinas_40.pt',
+    }
+    Salinas_experiment(hp=hyperparameter_salinas)
 
     # hyperparameter_hu = {
     #     'run_times': 1,

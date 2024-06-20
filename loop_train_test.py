@@ -193,6 +193,7 @@ def loop_train_test(dataset_name, run_times, num_PC, train_num, patch_size, batc
     np.save(fn, np.array(metrics))
     metrics = np.array(metrics)
     print(np.mean(metrics, axis=0))
+    print(np.std(metrics, axis=0))
 
 
 def lazy_test(model, X_PCAMirror, Y, dataset_name='PU', patch_size=9):

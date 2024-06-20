@@ -54,6 +54,7 @@ Instructions for usage
     data.py ...... A data processing script for hyperspectral image.
     loop_train_test.py ...... Perform iterative training and testing loops, saving the model weights in the 'save\models' directory, and storing the confusion matrix of the test results in the 'save\results' directory.
     loss_function.py ...... A script for calculating training loss.
+    visualization.py ...... A script for drawing and visualization.
 
 1. Begin by executing AutoEncoder.py to initiate the training of the autoencoder for the specific dataset. It is advised to set the training iterations to a minimum of 50. Automatically save the model with the lowest loss, and take note of the file path for the corresponding .pt file.
 2. Proceed to run main.py for model training and testing on the specified dataset. Ensure that you accurately input the autoencoder's file path into the designated dictionary variable before initiating the process.
